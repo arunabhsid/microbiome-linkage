@@ -34,6 +34,4 @@ Sharma A, Szymczak S, Rühlemann M, Freitag-Wolf S, Knecht C, Enderle J, Schreib
 }
 ```
 
-## License
 
-Set a license for the code (for example, MIT) and add a `LICENSE` file. The article itself is published under CC BY-NC 4.0.
