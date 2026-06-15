@@ -1034,43 +1034,6 @@ ggplot(data = Linkage_regions_SHA, aes(x=BP,y=LOD)) + geom_line()
 # Write to file
 write.table(Linkage_regions_SHA, "1LOD-drop_region/shannon1LODdrop.txt", sep = "\t", quote = F, col.names = T, row.names = F)
 
-#############################################################
-
-#         ANALYSIS: Linkage SNPs vs Liu SNPs 
-
-#############################################################
-
-##### 
-
-liu_snps_list <- readLines("./data/snpslist_liu_232.txt")
-
-# Get all SNPs from 1-LOD-drop region
-
-All_1LOD_drop_SNPs <- list.files(path = "./Two-unit_support_interval/",
-                             pattern = "*.txt", full.names = TRUE)
-str(All_1LOD_drop_SNPs)
-
-# Combine all the 22 .tbl files
-linkage_snps <- do.call(rbind, lapply(All_1LOD_drop_SNPs, read.table, sep = "\t", header = T))
-head(linkage_snps) 
-dim(linkage_snps) # 13022     6
-str(linkage_snps)
-
-qtl_snps_list <- linkage_snps
-
-
-gwas_qtl_common <- qtl_snps_list[qtl_snps_list$POS %in% liu_snps_list,]
-# Write to file
-write.table(gwas_qtl_common, file = "./results/SNP_overlap.txt", sep= " ", col.names = T, row.names = F, quote = F)
-
-
-# Significant SNPs from pairwise similarity analysis
-sig_SNP <- "rs11741861"
-
-LODs_for_Analysis1 <- qtl_snps_list[qtl_snps_list$POS %in% sig_SNP,]
-
-# No overlap
-
 
 
 
