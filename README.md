@@ -8,7 +8,7 @@ Paper: https://doi.org/10.1080/19490976.2021.2024415 (open access, CC BY-NC 4.0)
 
 Using SNP genotypes together with 16S rRNA gene microbiome and phenotype data from the Kiel IBD kindred cohort (IBD-KC), this study examined the relationship between genetic and microbiome similarity in families of IBD patients, and then performed a genome-wide quantitative trait locus (QTL) linkage analysis of microbiome traits. The code here covers the four analysis stages: pedigree-based heritability of genus abundances, pairwise genetic and microbiome similarity at IBD risk loci, the genome-wide QTL linkage scan, and SNP-wise association within the linked regions.
 
-## Repository structure
+## Analysis scripts
 
 The analysis scripts are in `R/`, numbered in the order they are run:
 
