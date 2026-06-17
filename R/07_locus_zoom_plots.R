@@ -10,7 +10,7 @@
    # BiocManager::install("biomaRt")
 
 if (requireNamespace("rstudioapi", quietly = TRUE) && rstudioapi::isAvailable()) {
-  setwd(dirname(rstudioapi::getActiveDocumentContext()$path))
+  setwd(dirname(dirname(rstudioapi::getActiveDocumentContext()$path)))
 }
 
 # libraries
@@ -21,8 +21,8 @@ library(patchwork)
 library(biomaRt)
 
 ## Region to plot (edit these three per region)
-region_file  <- "./Two-unit_support_interval/odoribacterCHR22_2USI_region1.txt"
-assoc_file   <- "./Two-unit_support_interval/assoc_pvals/odoribacter_gemma_2USI_region1.txt"
+region_file  <- "./results/two_unit_interval/odoribacterCHR22_2USI_region1.txt"
+assoc_file   <- "./results/two_unit_interval/assoc_pvals/odoribacter_gemma_2USI_region1.txt"
 region_label <- "Odoribacter_CHR22_region1"
 highlight_bp <- numeric(0)   # IBD-associated SNP(s) to mark red for this region; numeric(0) if none
 # regions that have one:
@@ -116,7 +116,7 @@ output_genes_region <- output_genes_region[!duplicated(output_genes_region$exter
 output_genes_region <- output_genes_region %>% mutate(external_gene_name = fct_reorder(external_gene_name,
                                                                                        start_position, .desc = TRUE))
 # for paper: write to file
-write.csv(output_genes_region, file = paste0("./results/Gene_list/", region_label, "_genes.csv"), quote = F, row.names = F)
+write.csv(output_genes_region, file = paste0("./results/gene_list/", region_label, "_genes.csv"), quote = F, row.names = F)
 
 # add position in Mb column
 output_genes_region$MBstart_position <- output_genes_region$start_position / 1000000
@@ -204,7 +204,7 @@ print(p3)
 ################################################################################
 
 # combine three plots
-jpeg(paste0("./Two-unit_support_interval/locus_zoom_plots/", region_label, ".jpg"),height=4,width=10,units='in',res=600)
+jpeg(paste0("./plots/locus_zoom/", region_label, ".jpg"),height=4,width=10,units='in',res=600)
 p1b <- p1 + xlab("")+ theme(axis.title.x=element_blank(), axis.text.x = element_blank()) 
 p3b <- p3 + xlab("")+ theme(axis.title.x=element_blank(), axis.text.x = element_blank()) + xlim(plot_range) 
 p1b + p3b + p2 + plot_layout(nrow = 3, heights = c(1, 1, 0.5))

@@ -9,14 +9,14 @@ library(ggplot2)
 library(grid)
 
 if (requireNamespace("rstudioapi", quietly = TRUE) && rstudioapi::isAvailable()) {
-  setwd(dirname(rstudioapi::getActiveDocumentContext()$path))
+  setwd(dirname(dirname(rstudioapi::getActiveDocumentContext()$path)))
 }
 
 # NOTE ON WORKFLOW:
 # For each trait/region this script writes the full LOD profile to
-# ./Two-unit_support_interval/whole_region/. The two-unit support intervals
+# ./results/two_unit_interval/whole_region/. The two-unit support intervals
 # were then determined manually from those LOD curves (SNPs within two LOD
-# units of each peak) and saved as <trait>_2USI.txt in./Two-unit_support_interval/.
+# units of each peak) and saved as <trait>_2USI.txt in./results/two_unit_interval/.
 # This script reads those interval files back in to verify and plot them.
 
 ## 2 LOD DROP from the highest LOD score on either side
@@ -24,7 +24,7 @@ if (requireNamespace("rstudioapi", quietly = TRUE) && rstudioapi::isAvailable())
 
 ### ROSEBURIA - CHR 19
 
-LOD_CHR_19 <- read.table("./linkage_results_markernames_22traits/merlin-regress-chr19.tbl", 
+LOD_CHR_19 <- read.table("./results/linkage_markernames/merlin-regress-chr19.tbl", 
                          sep = "\t", header = T)
 LOD_Roseburia_CHR_19 <- subset(LOD_CHR_19, PHENOTYPE == "Trait: Roseburia")
 dim(LOD_Roseburia_CHR_19) # 10875     8
@@ -47,13 +47,13 @@ ROS_CHR_region2[,c(4:6,8)] <- NULL
 ggplot(data = ROS_CHR_region2, aes(x=BP,y=LOD)) + geom_line()
 
 # Write to file (for manual analysis)
-write.table(ROS_CHR_region2, "./Two-unit_support_interval/whole_region/Roseburia_CHR19.txt", sep = "\t", quote = F, col.names = T, row.names = F)
+write.table(ROS_CHR_region2, "./results/two_unit_interval/whole_region/Roseburia_CHR19.txt", sep = "\t", quote = F, col.names = T, row.names = F)
 
 # Find the maximum LOD
 max(ROS_CHR_region2$LOD) # 3.781
 
 # Read file
-Roseburia_2USI <- read.table("./Two-unit_support_interval/roseburia_2USI.txt", 
+Roseburia_2USI <- read.table("./results/two_unit_interval/roseburia_2USI.txt", 
                              sep = "\t", header = T)
 # Check if the region is not sorted
 is.unsorted(Roseburia_2USI$BP)
@@ -65,7 +65,7 @@ ggplot(data = Roseburia_2USI, aes(x=BP,y=LOD)) + geom_line() # Looks good!
 
 ### CLOSTRIDIUM_XIVa - CHR 14
 
-LOD_CHR_14 <- read.table("./linkage_results_markernames_22traits/merlin-regress-chr14.tbl", 
+LOD_CHR_14 <- read.table("./results/linkage_markernames/merlin-regress-chr14.tbl", 
                          sep = "\t", header = T)
 LOD_Clostridium_XlVa_CHR_14 <- subset(LOD_CHR_14, PHENOTYPE == "Trait: Clostridium_XlVa")
 dim(LOD_Clostridium_XlVa_CHR_14) # 16195     8
@@ -88,7 +88,7 @@ CLOS_CHR_region2[,c(4:6,8)] <- NULL
 ggplot(data = CLOS_CHR_region2, aes(x=BP,y=LOD)) + geom_line()
 
 # Write to file (for manual analysis)
-write.table(CLOS_CHR_region2, "./Two-unit_support_interval/whole_region/Clostridium_XlVa_CHR14.txt", sep = "\t", quote = F, col.names = T, row.names = F)
+write.table(CLOS_CHR_region2, "./results/two_unit_interval/whole_region/Clostridium_XlVa_CHR14.txt", sep = "\t", quote = F, col.names = T, row.names = F)
 
 ### COMMENT
 # There will be multiple regions!
@@ -102,7 +102,7 @@ ggplot(data = CLOS_LOD3, aes(x=BP,y=LOD)) + geom_line()
 max(CLOS_CHR_region2$LOD) # 4.387
 
 # Read file 1
-Clostridium14_2USI <- read.table("./Two-unit_support_interval/clostridiumCHR14_2USI_region1.txt", 
+Clostridium14_2USI <- read.table("./results/two_unit_interval/clostridiumCHR14_2USI_region1.txt", 
                              sep = "\t", header = T)
 # Check if the region is not sorted
 is.unsorted(Clostridium14_2USI$BP)
@@ -114,7 +114,7 @@ ggplot(data = Clostridium14_2USI, aes(x=BP,y=LOD)) + geom_line() # Looks good!
 # Another peak: LOD 3.597
 
 # Read file 2
-Clostridium14_2USI_2 <- read.table("./Two-unit_support_interval/clostridiumCHR14_2USI_region2.txt", 
+Clostridium14_2USI_2 <- read.table("./results/two_unit_interval/clostridiumCHR14_2USI_region2.txt", 
                                  sep = "\t", header = T)
 # Check if the region is not sorted
 is.unsorted(Clostridium14_2USI_2$BP)
@@ -126,7 +126,7 @@ ggplot(data = Clostridium14_2USI_2, aes(x=BP,y=LOD)) + geom_line() # Looks good!
 
 ### CLOSTRIDIUM_XIVa - CHR 4
 
-LOD_CHR_4 <- read.table("./linkage_results_markernames_22traits/merlin-regress-chr04.tbl", 
+LOD_CHR_4 <- read.table("./results/linkage_markernames/merlin-regress-chr04.tbl", 
                         sep = "\t", header = T)
 LOD_Clostridium_XlVa_CHR_4 <- subset(LOD_CHR_4, PHENOTYPE == "Trait: Clostridium_XlVa")
 dim(LOD_Clostridium_XlVa_CHR_4) # 30186     8
@@ -151,10 +151,10 @@ ggplot(data = ROS_CHR_region2, aes(x=BP,y=LOD)) + geom_line() # One peak
 max(ROS_CHR_region2$LOD) # 3.022
 
 # Write to file (for manual analysis)
-write.table(ROS_CHR_region2, "./Two-unit_support_interval/whole_region/Clostridium_XlVa_CHR4.txt", sep = "\t", quote = F, col.names = T, row.names = F)
+write.table(ROS_CHR_region2, "./results/two_unit_interval/whole_region/Clostridium_XlVa_CHR4.txt", sep = "\t", quote = F, col.names = T, row.names = F)
 
 # Read file 
-Clostridium4_2USI <- read.table("./Two-unit_support_interval/clostridiumCHR4_2USI.txt", 
+Clostridium4_2USI <- read.table("./results/two_unit_interval/clostridiumCHR4_2USI.txt", 
                                    sep = "\t", header = T)
 # Check if the region is not sorted
 is.unsorted(Clostridium4_2USI$BP)
@@ -166,7 +166,7 @@ ggplot(data = Clostridium4_2USI, aes(x=BP,y=LOD)) + geom_line() # Looks good!
 
 ### Barnesiella - CHR 4
 
-LOD_CHR_4 <- read.table("./linkage_results_markernames_22traits/merlin-regress-chr04.tbl", 
+LOD_CHR_4 <- read.table("./results/linkage_markernames/merlin-regress-chr04.tbl", 
                         sep = "\t", header = T)
 LOD_Barnesiella_CHR_4 <- subset(LOD_CHR_4, PHENOTYPE == "Trait: Barnesiella")
 dim(LOD_Barnesiella_CHR_4) # 30186    8
@@ -191,10 +191,10 @@ ggplot(data = ROS_CHR_region2, aes(x=BP,y=LOD)) + geom_line()
 max(ROS_CHR_region2$LOD) # 3.241
 
 # Write to file (for manual analysis)
-write.table(ROS_CHR_region2, "./Two-unit_support_interval/whole_region/Barnesiella_CHR4.txt", sep = "\t", quote = F, col.names = T, row.names = F)
+write.table(ROS_CHR_region2, "./results/two_unit_interval/whole_region/Barnesiella_CHR4.txt", sep = "\t", quote = F, col.names = T, row.names = F)
 
 # Read file 
-Barnesiella4_2USI <- read.table("./Two-unit_support_interval/barnesiellaCHR4_2USI.txt", 
+Barnesiella4_2USI <- read.table("./results/two_unit_interval/barnesiellaCHR4_2USI.txt", 
                                 sep = "\t", header = T)
 # Check if the region is not sorted
 is.unsorted(Barnesiella4_2USI$BP)
@@ -206,7 +206,7 @@ ggplot(data = Barnesiella4_2USI, aes(x=BP,y=LOD)) + geom_line() # Looks good!
 
 ### Ruminococcus - CHR 16 (Two regions together)
 
-LOD_CHR_16 <- read.table("./linkage_results_markernames_22traits/merlin-regress-chr16.tbl", 
+LOD_CHR_16 <- read.table("./results/linkage_markernames/merlin-regress-chr16.tbl", 
                          sep = "\t", header = T)
 LOD_Ruminococcus_CHR_16 <- subset(LOD_CHR_16, PHENOTYPE == "Trait: Ruminococcus")
 dim(LOD_Ruminococcus_CHR_16) # 16442    8
@@ -231,10 +231,10 @@ ggplot(data = ROS_CHR_region2, aes(x=BP,y=LOD)) + geom_line()
 max(ROS_CHR_region2$LOD) # 4.421
 
 # Write to file (for manual analysis)
-write.table(ROS_CHR_region2, "./Two-unit_support_interval/whole_region/Ruminococcus_CHR16.txt", sep = "\t", quote = F, col.names = T, row.names = F)
+write.table(ROS_CHR_region2, "./results/two_unit_interval/whole_region/Ruminococcus_CHR16.txt", sep = "\t", quote = F, col.names = T, row.names = F)
 
 # Read file 
-Ruminococcus_2USI <- read.table("./Two-unit_support_interval/ruminococcusCHR16_2USI_region1&2.txt", 
+Ruminococcus_2USI <- read.table("./results/two_unit_interval/ruminococcusCHR16_2USI_region1&2.txt", 
                                 sep = "\t", header = T)
 # Check if the region is not sorted
 is.unsorted(Ruminococcus_2USI$BP)
@@ -253,7 +253,7 @@ ggplot(data = Ruminococcus_2USI, aes(x=BP,y=LOD)) + geom_line() +
 
 ### Pseudoflavonifractor - CHR 7 
 
-LOD_CHR_7 <- read.table("./linkage_results_markernames_22traits/merlin-regress-chr07.tbl", 
+LOD_CHR_7 <- read.table("./results/linkage_markernames/merlin-regress-chr07.tbl", 
                         sep = "\t", header = T)
 LOD_Pseudoflavonifractor_CHR_7 <- subset(LOD_CHR_7, PHENOTYPE == "Trait: Pseudoflavonifractor")
 dim(LOD_Pseudoflavonifractor_CHR_7) # 26719    8
@@ -278,10 +278,10 @@ ggplot(data = ROS_CHR_region2, aes(x=BP,y=LOD)) + geom_line()
 max(ROS_CHR_region2$LOD) # 3.133
 
 # Write to file (for manual analysis)
-write.table(ROS_CHR_region2, "./Two-unit_support_interval/whole_region/Pseudoflavonifractor_CHR7.txt", sep = "\t", quote = F, col.names = T, row.names = F)
+write.table(ROS_CHR_region2, "./results/two_unit_interval/whole_region/Pseudoflavonifractor_CHR7.txt", sep = "\t", quote = F, col.names = T, row.names = F)
 
 # Read file 
-Pseudoflavonifractor_2USI <- read.table("./Two-unit_support_interval/pseudoflavonifractorCHR7_2USI.txt", 
+Pseudoflavonifractor_2USI <- read.table("./results/two_unit_interval/pseudoflavonifractorCHR7_2USI.txt", 
                                 sep = "\t", header = T)
 # Check if the region is not sorted
 is.unsorted(Pseudoflavonifractor_2USI$BP)
@@ -293,7 +293,7 @@ ggplot(data = Pseudoflavonifractor_2USI, aes(x=BP,y=LOD)) + geom_line() # Looks 
 
 ### Parasutterella - CHR 14
 
-LOD_CHR_14 <- read.table("./linkage_results_markernames_22traits/merlin-regress-chr14.tbl", 
+LOD_CHR_14 <- read.table("./results/linkage_markernames/merlin-regress-chr14.tbl", 
                          sep = "\t", header = T)
 LOD_Parasutterella_CHR_14 <- subset(LOD_CHR_14, PHENOTYPE == "Trait: Parasutterella")
 dim(LOD_Parasutterella_CHR_14) # 16195    8
@@ -318,10 +318,10 @@ ggplot(data = ROS_CHR_region2, aes(x=BP,y=LOD)) + geom_line()
 max(ROS_CHR_region2$LOD) # 3.018
 
 # Write to file (for manual analysis)
-write.table(ROS_CHR_region2, "./Two-unit_support_interval/whole_region/Parasutterella_CHR14.txt", sep = "\t", quote = F, col.names = T, row.names = F)
+write.table(ROS_CHR_region2, "./results/two_unit_interval/whole_region/Parasutterella_CHR14.txt", sep = "\t", quote = F, col.names = T, row.names = F)
 
 # Read file 
-Parasutterella_2USI <- read.table("./Two-unit_support_interval/parasutterellaCHR14_2USI.txt", 
+Parasutterella_2USI <- read.table("./results/two_unit_interval/parasutterellaCHR14_2USI.txt", 
                                         sep = "\t", header = T)
 # Check if the region is not sorted
 is.unsorted(Parasutterella_2USI$BP)
@@ -333,7 +333,7 @@ ggplot(data = Parasutterella_2USI, aes(x=BP,y=LOD)) + geom_line() # Looks good!
 
 ### Odoribacter - CHR 22 (DISCUSS-- DO IT AFTER THE MEETINGs)
 
-LOD_CHR_22 <- read.table("./linkage_results_markernames_22traits/merlin-regress-chr22.tbl", 
+LOD_CHR_22 <- read.table("./results/linkage_markernames/merlin-regress-chr22.tbl", 
                          sep = "\t", header = T)
 LOD_Odoribacter_CHR_22 <- subset(LOD_CHR_22, PHENOTYPE == "Trait: Odoribacter")
 dim(LOD_Odoribacter_CHR_22) # 7313    8
@@ -356,7 +356,7 @@ ROS_CHR_region2[,c(4:6,8)] <- NULL
 ggplot(data = ROS_CHR_region2, aes(x=BP,y=LOD)) + geom_line()
 
 # Write to file (for manual analysis)
-write.table(ROS_CHR_region2, "./Two-unit_support_interval/whole_region/Odoribacter_CHR22.txt", sep = "\t", quote = F, col.names = T, row.names = F)
+write.table(ROS_CHR_region2, "./results/two_unit_interval/whole_region/Odoribacter_CHR22.txt", sep = "\t", quote = F, col.names = T, row.names = F)
 
 ### COMMENT
 # There will be multiple regions!
@@ -369,7 +369,7 @@ ggplot(data = ODORI_LOD3, aes(x=BP,y=LOD)) + geom_line()
 max(ROS_CHR_region2$LOD) # 4.311
 
 # Read file 1
-Odoribacter_2USI_1 <- read.table("./Two-unit_support_interval/odoribacterCHR22_2USI_region1.txt", 
+Odoribacter_2USI_1 <- read.table("./results/two_unit_interval/odoribacterCHR22_2USI_region1.txt", 
                                   sep = "\t", header = T)
 # Check if the region is not sorted
 is.unsorted(Odoribacter_2USI_1$BP)
@@ -379,7 +379,7 @@ dim(Odoribacter_2USI_1) # 22   6
 ggplot(data = Odoribacter_2USI_1, aes(x=BP,y=LOD)) + geom_line() # Looks good!
 
 # Read file 2
-Odoribacter_2USI_2 <- read.table("./Two-unit_support_interval/odoribacterCHR22_2USI_region2.txt", 
+Odoribacter_2USI_2 <- read.table("./results/two_unit_interval/odoribacterCHR22_2USI_region2.txt", 
                                  sep = "\t", header = T)
 # Check if the region is not sorted
 is.unsorted(Odoribacter_2USI_2$BP)
@@ -389,7 +389,7 @@ dim(Odoribacter_2USI_2) # 763   6
 ggplot(data = Odoribacter_2USI_2, aes(x=BP,y=LOD)) + geom_line() # Looks good!
 
 # Read file 3
-Odoribacter_2USI_3 <- read.table("./Two-unit_support_interval/odoribacterCHR22_2USI_region3.txt", 
+Odoribacter_2USI_3 <- read.table("./results/two_unit_interval/odoribacterCHR22_2USI_region3.txt", 
                                  sep = "\t", header = T)
 # Check if the region is not sorted
 is.unsorted(Odoribacter_2USI_3$BP)
@@ -401,7 +401,7 @@ ggplot(data = Odoribacter_2USI_3, aes(x=BP,y=LOD)) + geom_line() # Looks good!
 
 ### ALPHA DIVERSITY SHANNON INDEX - CHR 3
 
-LOD_CHR_3 <- read.table("./linkage_results_AD_markernames/merlin-regress-chr03.tbl", 
+LOD_CHR_3 <- read.table("./results/linkage_AD/merlin-regress-chr03.tbl", 
                         sep = "\t", header = T)
 LOD_Shannon_CHR_3 <- subset(LOD_CHR_3, PHENOTYPE == "Trait: Shannon")
 dim(LOD_Shannon_CHR_3) # 32057     8
@@ -425,12 +425,12 @@ SHA_CHR_region2[,c(4:6,8)] <- NULL
 ggplot(data = SHA_CHR_region2, aes(x=BP,y=LOD)) + geom_line()
 
 # Write to file (for manual analysis)
-write.table(SHA_CHR_region2, "./Two-unit_support_interval/whole_region/Shannon_CHR3.txt", sep = "\t", quote = F, col.names = T, row.names = F)
+write.table(SHA_CHR_region2, "./results/two_unit_interval/whole_region/Shannon_CHR3.txt", sep = "\t", quote = F, col.names = T, row.names = F)
 
 max(SHA_CHR_region2$LOD) # Max LOD: 3.722
 
 # Read file
-Shannon_2USI <- read.table("./Two-unit_support_interval/shannonCHR3_2USI.txt", sep = "\t", header = T)
+Shannon_2USI <- read.table("./results/two_unit_interval/shannonCHR3_2USI.txt", sep = "\t", header = T)
 is.unsorted(Shannon_2USI$BP)
 dim(Shannon_2USI) # 177   6
 
@@ -458,7 +458,7 @@ liu_snps_list <- readLines("./data/snpslist_liu_232.txt")
 
 # Get all SNPs from the two-unit support intervals
 
-All_2USI_SNPs <- list.files(path = "./Two-unit_support_interval/",
+All_2USI_SNPs <- list.files(path = "./results/two_unit_interval/",
                              pattern = "*.txt", full.names = TRUE)
 str(All_2USI_SNPs)
 

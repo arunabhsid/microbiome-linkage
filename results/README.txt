@@ -1,0 +1,1 @@
+All analysis outputs are stored here. Tables and objects (SNP_overlap.txt, bubier_overlap.txt, Suppl_table_3.csv, lm_rs11741861.txt, session info) are written here; the subfolders hold the larger intermediate and result sets. Empty in the repository; populated when the scripts run.

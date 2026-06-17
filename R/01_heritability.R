@@ -6,7 +6,7 @@
 # Run this script from the folder that contains it (the folder with the ./data subfolder).
 
 if (requireNamespace("rstudioapi", quietly = TRUE) && rstudioapi::isAvailable()) {
-  setwd(dirname(rstudioapi::getActiveDocumentContext()$path))
+  setwd(dirname(dirname(rstudioapi::getActiveDocumentContext()$path)))
 
 # Libraries
 library(edgeR)
@@ -176,7 +176,7 @@ herit_result3$Genus <- as.factor(herit_result3$Genus)
 herit_res_final <- herit_result3[order(herit_result3$h2),]
 
 # Table for paper
-write.table(herit_res_final,"heritability_table.txt", sep = ",", quote = F,row.names = F, col.names = T)
+write.table(herit_res_final,"./results/heritability_table.txt", sep = ",", quote = F,row.names = F, col.names = T)
 
 ######################## Final plots ################### 
 
@@ -195,7 +195,7 @@ ggplot(herit_result3, aes(x = h2, y = Genus)) + theme_minimal() + geom_bar(stat 
   labs(x = "h² (%)")
 dev.off()
 
-jpeg("Heritability_jpeg.jpg",height=4,width=6,units='in',res=600)
+jpeg("./plots/Heritability_jpeg.jpg",height=4,width=6,units='in',res=600)
 ggplot(herit_result3, aes(x = h2, y = Genus)) + theme_minimal() + geom_bar(stat = "identity") +
   labs(x = "h² (%)")
 dev.off()

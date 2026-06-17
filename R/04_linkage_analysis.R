@@ -8,7 +8,7 @@
 ### MICROBIOME DATA (Quantitative Trait)
 
 if (requireNamespace("rstudioapi", quietly = TRUE) && rstudioapi::isAvailable()) {
-       setwd(dirname(rstudioapi::getActiveDocumentContext()$path))
+       setwd(dirname(dirname(rstudioapi::getActiveDocumentContext()$path)))
      }
 
 # Libraries
@@ -209,7 +209,7 @@ for (d in 1:22) {
 
 ### INTERPETATION GENOMEWIDE WITHOUT LD PRUNNING
 
-AllRegressOut8 <- list.files(path = "./linkage_results_markernames_22traits/",
+AllRegressOut8 <- list.files(path = "./results/linkage_markernames/",
                              pattern = "*.tbl", full.names = TRUE)
 str(AllRegressOut8)
 
@@ -273,7 +273,7 @@ for (d in 1:22) {
 
 # Results
 
-AllRegressOut7 <- list.files(path = "./linkage_results_positions_22traits/",
+AllRegressOut7 <- list.files(path = "./results/linkage_positions/",
                              pattern = "*.tbl", full.names = T)
 str(AllRegressOut7)
 
@@ -625,7 +625,7 @@ dev.off()
 
 ### ROSEBURIA - CHR 19
 
-LOD_CHR_19 <- read.table("./linkage_results_markernames_22traits/merlin-regress-chr19.tbl", 
+LOD_CHR_19 <- read.table("./results/linkage_markernames/merlin-regress-chr19.tbl", 
                          sep = "\t", header = T)
 LOD_Roseburia_CHR_19 <- subset(LOD_CHR_19, PHENOTYPE == "Trait: Roseburia")
 dim(LOD_Roseburia_CHR_19) # 10875     8
@@ -664,13 +664,13 @@ dim(Linkage_regions_ROS) # 332   6
 ggplot(data = Linkage_regions_ROS, aes(x=BP,y=LOD)) + geom_line()
 
 # Write to file
-write.table(Linkage_regions_ROS, "./1LOD-drop_region/roseburia1LODdrop.txt", sep = "\t", quote = F, col.names = T, row.names = F)
+write.table(Linkage_regions_ROS, "./results/1LOD_drop/roseburia1LODdrop.txt", sep = "\t", quote = F, col.names = T, row.names = F)
 
 ###
 
 ### CLOSTRIDIUM_XIVa - CHR 14
 
-LOD_CHR_14 <- read.table("./linkage_results_markernames_22traits/merlin-regress-chr14.tbl", 
+LOD_CHR_14 <- read.table("./results/linkage_markernames/merlin-regress-chr14.tbl", 
                          sep = "\t", header = T)
 LOD_Clostridium_XlVa_CHR_14 <- subset(LOD_CHR_14, PHENOTYPE == "Trait: Clostridium_XlVa")
 dim(LOD_Clostridium_XlVa_CHR_14) # 16195     8
@@ -706,13 +706,13 @@ dim(range_of_1LODdrop) # 864   6
 dim(Linkage_regions_ROS) # 6479   6
 
 # Write to file
-write.table(Linkage_regions_ROS, "./1LOD-drop_region/Clostridium_XlVa1LODdrop.txt", sep = "\t", quote = F, col.names = T, row.names = F)
+write.table(Linkage_regions_ROS, "./results/1LOD_drop/Clostridium_XlVa1LODdrop.txt", sep = "\t", quote = F, col.names = T, row.names = F)
 
 ###
 
 ### CLOSTRIDIUM_XIVa - CHR 4
 
-LOD_CHR_4 <- read.table("./linkage_results_markernames_22traits/merlin-regress-chr04.tbl", 
+LOD_CHR_4 <- read.table("./results/linkage_markernames/merlin-regress-chr04.tbl", 
                          sep = "\t", header = T)
 LOD_Clostridium_XlVa_CHR_4 <- subset(LOD_CHR_4, PHENOTYPE == "Trait: Clostridium_XlVa")
 dim(LOD_Clostridium_XlVa_CHR_4) # 30186     8
@@ -748,13 +748,13 @@ dim(range_of_1LODdrop) # 83   6
 dim(Linkage_regions_ROS) # 2475   6
 
 # Write to file
-write.table(Linkage_regions_ROS, "./1LOD-drop_region/Clostridium_XlVa_CHR4_1LODdrop.txt", sep = "\t", quote = F, col.names = T, row.names = F)
+write.table(Linkage_regions_ROS, "./results/1LOD_drop/Clostridium_XlVa_CHR4_1LODdrop.txt", sep = "\t", quote = F, col.names = T, row.names = F)
 
 ###
 
 ### Barnesiella - CHR 4
 
-LOD_CHR_4 <- read.table("./linkage_results_markernames_22traits/merlin-regress-chr04.tbl", 
+LOD_CHR_4 <- read.table("./results/linkage_markernames/merlin-regress-chr04.tbl", 
                          sep = "\t", header = T)
 LOD_Barnesiella_CHR_4 <- subset(LOD_CHR_4, PHENOTYPE == "Trait: Barnesiella")
 dim(LOD_Barnesiella_CHR_4) # 30186    8
@@ -790,13 +790,13 @@ dim(range_of_1LODdrop) # 790   6
 dim(Linkage_regions_ROS) # 1062   6
 
 # Write to file
-write.table(Linkage_regions_ROS, "./1LOD-drop_region/Barnesiella1LODdrop.txt", sep = "\t", quote = F, col.names = T, row.names = F)
+write.table(Linkage_regions_ROS, "./results/1LOD_drop/Barnesiella1LODdrop.txt", sep = "\t", quote = F, col.names = T, row.names = F)
 
 ###
 
 ### Ruminococcus - CHR 16
 
-LOD_CHR_16 <- read.table("./linkage_results_markernames_22traits/merlin-regress-chr16.tbl", 
+LOD_CHR_16 <- read.table("./results/linkage_markernames/merlin-regress-chr16.tbl", 
                         sep = "\t", header = T)
 LOD_Ruminococcus_CHR_16 <- subset(LOD_CHR_16, PHENOTYPE == "Trait: Ruminococcus")
 dim(LOD_Ruminococcus_CHR_16) # 16442    8
@@ -832,13 +832,13 @@ dim(range_of_1LODdrop) # 330   6
 dim(Linkage_regions_ROS) # 378   6
 
 # Write to file
-write.table(Linkage_regions_ROS, "./1LOD-drop_region/Ruminococcus1LODdrop.txt", sep = "\t", quote = F, col.names = T, row.names = F)
+write.table(Linkage_regions_ROS, "./results/1LOD_drop/Ruminococcus1LODdrop.txt", sep = "\t", quote = F, col.names = T, row.names = F)
 
 ###
 
 ### Pseudoflavonifractor - CHR 7 (CHECK IT ONCE)
 
-LOD_CHR_7 <- read.table("./linkage_results_markernames_22traits/merlin-regress-chr07.tbl", 
+LOD_CHR_7 <- read.table("./results/linkage_markernames/merlin-regress-chr07.tbl", 
                          sep = "\t", header = T)
 LOD_Pseudoflavonifractor_CHR_7 <- subset(LOD_CHR_7, PHENOTYPE == "Trait: Pseudoflavonifractor")
 dim(LOD_Pseudoflavonifractor_CHR_7) # 26719    8
@@ -877,13 +877,13 @@ dim(Linkage_regions_ROS) # 8110   6
 ggplot(data = Linkage_regions_ROS, aes(x=BP,y=LOD)) + geom_line()
 
 # Write to file
-write.table(Linkage_regions_ROS, "./1LOD-drop_region/Pseudoflavonifractor1LODdrop.txt", sep = "\t", quote = F, col.names = T, row.names = F)
+write.table(Linkage_regions_ROS, "./results/1LOD_drop/Pseudoflavonifractor1LODdrop.txt", sep = "\t", quote = F, col.names = T, row.names = F)
 
 ###
 
 ### Parasutterella - CHR 14
 
-LOD_CHR_14 <- read.table("./linkage_results_markernames_22traits/merlin-regress-chr14.tbl", 
+LOD_CHR_14 <- read.table("./results/linkage_markernames/merlin-regress-chr14.tbl", 
                         sep = "\t", header = T)
 LOD_Parasutterella_CHR_14 <- subset(LOD_CHR_14, PHENOTYPE == "Trait: Parasutterella")
 dim(LOD_Parasutterella_CHR_14) # 16195    8
@@ -922,13 +922,13 @@ dim(Linkage_regions_ROS) # 1234   6
 ggplot(data = Linkage_regions_ROS, aes(x=BP,y=LOD)) + geom_line()
 
 # Write to file
-write.table(Linkage_regions_ROS, "./1LOD-drop_region/Parasutterella1LODdrop.txt", sep = "\t", quote = F, col.names = T, row.names = F)
+write.table(Linkage_regions_ROS, "./results/1LOD_drop/Parasutterella1LODdrop.txt", sep = "\t", quote = F, col.names = T, row.names = F)
 
 ###
 
 ### Odoribacter - CHR 22 
 
-LOD_CHR_22 <- read.table("./linkage_results_markernames_22traits/merlin-regress-chr22.tbl", 
+LOD_CHR_22 <- read.table("./results/linkage_markernames/merlin-regress-chr22.tbl", 
                         sep = "\t", header = T)
 LOD_Odoribacter_CHR_22 <- subset(LOD_CHR_22, PHENOTYPE == "Trait: Odoribacter")
 dim(LOD_Odoribacter_CHR_22) # 7313    8
@@ -972,7 +972,7 @@ dim(range_of_1LODdrop_1) # 10   6
 dim(Linkage_regions_Odori_1) # 10   6
 
 # Write to file
-write.table(Linkage_regions_Odori_1, "./1LOD-drop_region/Odoribacter1LODdrop_region1.txt", sep = "\t", quote = F, col.names = T, row.names = F)
+write.table(Linkage_regions_Odori_1, "./results/1LOD_drop/Odoribacter1LODdrop_region1.txt", sep = "\t", quote = F, col.names = T, row.names = F)
 
 # REGION 2
 # Get the first/last occurence of LOD greater than or equal to 3.259
@@ -988,13 +988,13 @@ dim(range_of_1LODdrop_2) # 572   6
 dim(Linkage_regions_Odori_2) # 1139   6
 
 # Write to file
-write.table(Linkage_regions_Odori_2, "./1LOD-drop_region/Odoribacter1LODdrop_region2.txt", sep = "\t", quote = F, col.names = T, row.names = F)
+write.table(Linkage_regions_Odori_2, "./results/1LOD_drop/Odoribacter1LODdrop_region2.txt", sep = "\t", quote = F, col.names = T, row.names = F)
 
 ###
 
 ### ALPHA DIVERSITY SHANNON INDEX - CHR 3
 
-LOD_CHR_3 <- read.table("./linkage_results_AD_markernames/merlin-regress-chr03.tbl", 
+LOD_CHR_3 <- read.table("./results/linkage_AD/merlin-regress-chr03.tbl", 
                         sep = "\t", header = T)
 LOD_Shannon_CHR_3 <- subset(LOD_CHR_3, PHENOTYPE == "Trait: Shannon")
 dim(LOD_Shannon_CHR_3) # 32057     8
@@ -1032,7 +1032,7 @@ dim(Linkage_regions_SHA) #2131   6
 #Plot
 ggplot(data = Linkage_regions_SHA, aes(x=BP,y=LOD)) + geom_line()
 # Write to file
-write.table(Linkage_regions_SHA, "1LOD-drop_region/shannon1LODdrop.txt", sep = "\t", quote = F, col.names = T, row.names = F)
+write.table(Linkage_regions_SHA, "results/1LOD_drop/shannon1LODdrop.txt", sep = "\t", quote = F, col.names = T, row.names = F)
 
 
 

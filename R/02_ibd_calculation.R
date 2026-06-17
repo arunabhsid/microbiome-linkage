@@ -7,7 +7,7 @@
 
 # Path
 if (requireNamespace("rstudioapi", quietly = TRUE) && rstudioapi::isAvailable()) {
-       setwd(dirname(rstudioapi::getActiveDocumentContext()$path))
+       setwd(dirname(dirname(rstudioapi::getActiveDocumentContext()$path)))
      }
 
 # Libraries
@@ -35,7 +35,7 @@ foreach(i = input_names) %do% {
   
   cmd <-  paste0("plink1 --noweb --bfile ./data/KIN_GSA_MD_24v2_0_B1_b37_qc_completed_sort",
   " --output-missing-phenotype 0 --remove ./data/indiv_remove.txt --snp ", i, " --window 500",
-  " --recode --out IBD_calc/ibd_", i)
+  " --recode --out results/ibd/ibd_", i)
   system(cmd)
   
 }
@@ -44,7 +44,7 @@ foreach(i = input_names) %do% {
 # Total SNPs: 204
 
 # Read in all the .map files
-map_Files <- Sys.glob("IBD_calc/*.map")
+map_Files <- Sys.glob("results/ibd/*.map")
 str(map_Files)
 
 # Loop over all the map files
@@ -58,7 +58,7 @@ for (map_file in map_Files) {
   
   # write new data to separate file:
   write.table(SNP, 
-              "IBD_calc/results/SNP_density.csv",
+              "results/ibd/SNP_density.csv",
               append = TRUE,
               sep = ",",
               row.names = FALSE,
@@ -66,24 +66,24 @@ for (map_file in map_Files) {
 }
 
 # Read in the file
-f1 <- read.csv("IBD_calc/results/SNP_density.csv", header = FALSE)
+f1 <- read.csv("results/ibd/SNP_density.csv", header = FALSE)
 head(f1)
 
 # Clean up SNP names
-f1$V1 <- gsub("IBD_calc/ibd_|.map","", f1$V1)
+f1$V1 <- gsub("results/ibd/ibd_|.map","", f1$V1)
 head(f1)
 min(f1$V2) # 65 SNPs
 max(f1$V2) # 493 SNPs
 
 # Create a plot
-jpeg("IBD_calc/results/Number of SNPs at window size 500kb.jpg",height=8,width=12,units='in',res=600)
+jpeg("results/ibd/Number of SNPs at window size 500kb.jpg",height=8,width=12,units='in',res=600)
 ggplot(f1, aes(x = V1, y = V2)) + geom_col() + coord_flip() + 
   labs(title = "Number of SNPs at window size 500kb", x = "Map file", y = "Number of SNPs") +
   theme(axis.text.y = element_text(size = 4)) 
 dev.off()
 
 # Histogram
-jpeg("IBD_calc/results/Number of SNPs at window size 500kb_hist.jpg",height=8,width=12,units='in',res=600)
+jpeg("results/ibd/Number of SNPs at window size 500kb_hist.jpg",height=8,width=12,units='in',res=600)
 p<-ggplot(f1, aes(x=V2)) + 
   geom_histogram(color="black", fill="grey") + 
   labs(title = "Number of SNPs at window size 500kb", x = "Map file of size", y = "Number of SNPs")
@@ -98,7 +98,7 @@ dev.off()
 ########################################################
 
 # Mapfiles
-mapfiles <-Sys.glob(path = "IBD_calc/*.map")
+mapfiles <-Sys.glob(path = "results/ibd/*.map")
 str(mapfiles)
 # Create dat files
 foreach(i = mapfiles) %do% {
@@ -112,7 +112,7 @@ foreach(i = mapfiles) %do% {
 
 ########################################################
 
-datfiles <- Sys.glob(path = "IBD_calc/*.dat")
+datfiles <- Sys.glob(path = "results/ibd/*.dat")
 head(datfiles)
 
 new_names <- gsub(".map", "", datfiles)
@@ -125,7 +125,7 @@ file.rename(datfiles, new_names)
 ########################################################
 
 # Read in all the .map files
-map_Files2 <- Sys.glob(path = "IBD_calc/*.map")
+map_Files2 <- Sys.glob(path = "results/ibd/*.map")
 str(map_Files2)
 
 # Loop over all the map files
@@ -153,7 +153,7 @@ for (map_file in map_Files2) {
 
 ########################################################
 
-setwd("IBD_calc/")
+setwd("results/ibd/")
 # We could us the SNP names as iterator
 head(input_names)
 
@@ -185,7 +185,7 @@ for (ibd_file in ibd_Files) {
   
   # write new data to separate file:
   write.table(Row, 
-              "./results/IBD_result_length.csv",
+              "./IBD_result_length.csv",
               append = TRUE,
               sep = ",",
               row.names = FALSE,
@@ -193,7 +193,7 @@ for (ibd_file in ibd_Files) {
 }
 
 # Read in the file
-f2 <- read.csv("./results/IBD_result_length.csv", header = FALSE)
+f2 <- read.csv("./IBD_result_length.csv", header = FALSE)
 head(f2)
 
 # Clean up SNP names
@@ -205,7 +205,7 @@ max(f2$V2)
 library(ggplot2) # 1588345
 
 # Plot
-jpeg("./results/Number of rows per ibd file.jpg",height=8,width=12,units='in',res=600)
+jpeg("./Number of rows per ibd file.jpg",height=8,width=12,units='in',res=600)
 ggplot(f2, aes(x = V1, y = V2)) + geom_col() + coord_flip() + 
   labs(title = "Number of rows per .ibd file", x = "IBD file", y = "Number of Rows") +
   theme(axis.text.y = element_text(size = 4)) 
@@ -234,7 +234,7 @@ for (ibd_file in ibd_Files) {
   
   # write new data to separate file
   write.table(My_df, 
-              "./results/Row_max.csv",
+              "./Row_max.csv",
               append = TRUE,
               sep = ",",
               row.names = FALSE,
@@ -242,13 +242,13 @@ for (ibd_file in ibd_Files) {
 }
 
 # Read in the file
-f3 <- read.csv("./results/Row_max.csv", header = FALSE)
+f3 <- read.csv("./Row_max.csv", header = FALSE)
 nrow(f3) # 145969963
 min(f3$V1) # 0.33333
 max(f3$V1) # 1
 
 # Plot
-jpeg("./results/Max_IBD_all_pairs.jpg",height=8,width=12,units='in',res=600)
+jpeg("./Max_IBD_all_pairs.jpg",height=8,width=12,units='in',res=600)
 f3$V1 <- as.numeric(f3$V1)
 hist(f3$V1)
 dev.off()
@@ -331,7 +331,7 @@ head(allIBDFiles4)
 
 # FIRST CALCULATE THE KAPPAS
 # Read the .fam file
-fam_file <- read.table("../data/KIN_GSA_MD_24v2_0_B1_b37_qc_completed_sort.fam")
+fam_file <- read.table("../../data/KIN_GSA_MD_24v2_0_B1_b37_qc_completed_sort.fam")
 head(fam_file)
 # Remove sex and phenotype column
 fam_file$V5 <- NULL
@@ -512,7 +512,7 @@ pedAll <- pedigree(id = fam9$id, dadid = fam9$father, momid = fam9$mother,
                    sex = fam9$sex, famid = fam9$ped)
 print(pedAll)
 # Plot family 9
-jpeg("./results/Family_9.jpg",height=8,width=12,units='in',res=600)
+jpeg("./Family_9.jpg",height=8,width=12,units='in',res=600)
 plot(pedAll["9"])
 dev.off()
 
@@ -591,7 +591,7 @@ dim(std_ibd_WIDE)   # 519 190
 head(std_ibd_WIDE)
 
 # Save std_ibd_WIDE
-saveRDS(std_ibd_WIDE, file = "./results/std_IBD_WIDE.Rds")
+saveRDS(std_ibd_WIDE, file = "./std_IBD_WIDE.Rds")
 
 # Session Info
-writeLines(capture.output(sessionInfo()), "./results/sessionInfo.txt")
+writeLines(capture.output(sessionInfo()), "./sessionInfo.txt")

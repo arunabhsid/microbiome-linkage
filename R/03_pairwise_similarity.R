@@ -10,7 +10,7 @@
 # Run this script from the folder that contains it (the folder with the ./data subfolder).
 
 if (requireNamespace("rstudioapi", quietly = TRUE) && rstudioapi::isAvailable()) {
-  setwd(dirname(rstudioapi::getActiveDocumentContext()$path))
+  setwd(dirname(dirname(rstudioapi::getActiveDocumentContext()$path)))
 }
 
 

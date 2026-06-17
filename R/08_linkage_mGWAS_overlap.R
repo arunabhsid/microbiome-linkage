@@ -6,7 +6,7 @@
 
 
 if (requireNamespace("rstudioapi", quietly = TRUE) && rstudioapi::isAvailable()) {
-       setwd(dirname(rstudioapi::getActiveDocumentContext()$path))
+       setwd(dirname(dirname(rstudioapi::getActiveDocumentContext()$path)))
      }
 
 # Libraries
@@ -15,7 +15,7 @@ library(tidyr)
 
 # Get the two-unit support interval files
 
-All_intervals_SNPs <- list.files(path = "./Two-unit_support_interval/",
+All_intervals_SNPs <- list.files(path = "./results/two_unit_interval/",
                                  pattern = "*.txt", full.names = TRUE)
 str(All_intervals_SNPs)
 
