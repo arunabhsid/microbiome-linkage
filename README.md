@@ -1,6 +1,6 @@
 # Genetic modifiers of microbiome traits in IBD families
 
-Analysis code for the study *Linkage analysis identifies novel genetic modifiers of microbiome traits in families with inflammatory bowel disease* (Sharma et al., *Gut Microbes*, 2022).
+This repository contains analysis code for the study *Linkage analysis identifies novel genetic modifiers of microbiome traits in families with inflammatory bowel disease* (Sharma et al., *Gut Microbes*, 2022).
 
 Paper: https://doi.org/10.1080/19490976.2021.2024415 (open access, CC BY-NC 4.0)
 
@@ -27,7 +27,7 @@ The individual-level genotype and microbiome data are not included, as they cann
 
 ## Tools and packages
 
-The analysis was carried out in R. Packages used across the scripts include dplyr, tidyr, ggplot2, patchwork, forcats, data.table, pedtools, and biomaRt (v2.44.4). The genome-wide linkage scan was run in MERLIN (merlin-regress, pedstats), the within-region SNP association in WISARD with GEMMA, and SNP positions for the mGWAS comparison were obtained from Ensembl VEP. Add the R and MERLIN version numbers and the package versions, for example from the output of sessionInfo()
+The analyses were carried out in R. Packages used across the scripts include dplyr, tidyr, ggplot2, patchwork, forcats, data.table, pedtools, and biomaRt (v2.44.4). The genome-wide linkage scan was run in MERLIN (merlin-regress, pedstats), the within-region SNP association in WISARD with GEMMA, and SNP positions for the mGWAS comparison were obtained from Ensembl VEP. 
 
 ## Citation
 
