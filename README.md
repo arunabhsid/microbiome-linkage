@@ -1,4 +1,4 @@
-# Genetic modifiers of microbiome traits in IBD families
+# Linkage analysis identifies novel genetic modifiers of microbiome traits in families with inflammatory bowel disease
 
 This repository contains analysis code for the study *Linkage analysis identifies novel genetic modifiers of microbiome traits in families with inflammatory bowel disease* (Sharma et al., *Gut Microbes*, 2022).
 
